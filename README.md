@@ -1,41 +1,113 @@
-Report:
+# 🚀 Elevator Simulation System
 
-The final project for the course is the creation of a simplified elevator simulation system. So there we create the Multisim simulator and how it will look like.
+## 📌 Project Overview
 
-![Multisim Simulator](images\Circuit.png)
+This project is the final assignment for the course, aimed at creating a **simplified elevator simulation system** using **Multisim** and **C programming**. The goal is to design a functional elevator model that operates across 8 floors with a visual representation through a **7-segment display and LED indicators**.
 
-So our Multisim looks like this and we write our code in the C language. There we need 8051 MCU. After that, we use resistors and also add LEDs that will light up to show information on the display. We also add two switches. The circuit diagram shows a simplified elevator system with 8 floors and one elevator. The elevator has a 7-segment display that shows the current floor and 8 LED lamps that sequentially light to convey the same information. We have 8 switches for elevator requests, 8 switches for floor selection, a 7-segment display for floor indication, and 8 LEDs for additional visual indication of the floor. You need to use 2 input ports and 2 output ports. Remember that Port 0 requires the connection of extra pull-up resistors, unlike Ports 1, 2, and 3.
+---
 
-The presented elevator system circuit diagram illustrates a simplified model of an elevator system comprising eight floors and a single elevator. The elevator incorporates a 7-segment display to indicate the current floor and eight LED lamps that illuminate sequentially to convey the same information differently. The circuit's key components include the 8051 microcontroller, responsible for controlling the elevator's movement, the 7-segment display, and the LED lamps. The button press detection circuit detects when a button is pressed, enabling the system to respond to user input.
+## 🎛️ Multisim Circuit Design
 
-The circuit's operation commences with the 8051 microcontroller awaiting a button press. Upon detecting a button press, the microcontroller determines the corresponding floor. Subsequently, the elevator's state is set to either moving up or moving down, depending on the pressed button floor. The microcontroller then orchestrates the elevator's movement, ensuring it reaches the desired floor. Simultaneously, the 7-segment display and LED lamps are updated to reflect the elevator's current position. Once the elevator reaches the destination floor, the microcontroller halts its movement and transitions the elevator state to idle.
+### 🔹 Circuit Diagram
 
-This simplified elevator system circuit diagram serves as a foundation for developing a functional elevator simulation system using Multisim.
+![Multisim Simulator](images/Circuit.png)
 
-A 7-segment display is a form of an electronic display device that consists of seven LEDs arranged in a rectangular fashion as shown below. Each LED is called a segment that maps to one of the terminals A through G (pay attention to the labels on the picture below). So the concept looks like this:
+### 🔹 Key Components
+- **8051 Microcontroller** – Controls the elevator's movement.
+- **Resistors & LEDs** – Indicate floor selection and current position.
+- **7-Segment Display** – Shows the current floor.
+- **Switches** – Used for elevator calls and floor selection.
 
-![HEX Conversion](images\Hex_Table_OF_Numbers.png)
+### 🔹 System Description
+- The **elevator has 8 floors** and a **7-segment display** to indicate the current floor.
+- **8 LED lamps** sequentially light up to provide an additional visual representation of the floor.
+- **8 floor selection switches** allow the user to request an elevator.
+- **2 input ports & 2 output ports** are utilized.
+- **Port 0 requires pull-up resistors**, while Ports 1, 2, and 3 do not.
 
-So for every floor, we have different HEX conversion values: 0x9F, 0x25, 0x0D, 0x99, 0x49, 0x41, 0x1F, 0x01.
+The **8051 microcontroller** detects button presses and determines the floor selection. The system then updates the **elevator state**, moving **up or down** accordingly. The **display and LEDs are updated** dynamically to reflect the elevator's position.
 
-![7-Segment Display](images\First_Part_OF_CODE.jpg)
+---
 
-Create a function called `display`. The switch statement checks the value of `a` and executes the corresponding case block. Each case block assigns a specific hexadecimal value to the P0 register. If `a` is equal to 1, the P0 register is assigned the hexadecimal value `0x79`. Similarly, if `a` is equal to 8, the P0 register is assigned the hexadecimal value `0x00`. The break statement at the end of each case block prevents the execution of subsequent cases.
+## 🔢 HEX Conversion for 7-Segment Display
 
-![Function Display](images\Second_Part_OF_CODE.jpg)
+A **7-segment display** consists of **7 LEDs** arranged to represent numbers.
 
-The function `floor_call` is responsible for calling the elevator to different floors. For each floor button pressed, it checks whether the destination floor (`d`) is greater or less than the current floor (`global`). Depending on the relationship between `d` and `global`, it either increments or decrements `global`. During this process, the elevator's position is updated, and the display and LED indicators are updated accordingly. If `d` is greater than `global`, the elevator moves up; otherwise, it moves down. In the video defense, I showed how it works.
+![HEX Conversion](images/Hex_Table_OF_Numbers.png)
 
-![Floor Call Function](images\Third_Part_OF_CODE.jpg)
+For each floor, the corresponding **HEX conversion values** are:
+```
+0x9F, 0x25, 0x0D, 0x99, 0x49, 0x41, 0x1F, 0x01
+```
 
-The `display_led` function is designed to control LEDs based on the value of the integer parameter `a`. The function uses a switch operator to evaluate the value of `a` and execute the appropriate case, each representing a different floor or LED.
+---
 
-The function starts with `void display_led(unsigned int a)`, a non-return function with an integer argument, which explains that `display_led` is a function that does not return any value and takes an unsigned integer as an argument.
+## 🖥️ Code Implementation
 
-The switch statement `(a)` is used to test the value of `a` and move to the appropriate case. Each case contains code to turn on a specific LED associated with a specific floor number. Port P2 is controlled using bitwise operations, specifically the bitwise NOT (`~`) and left shift (`<<`) operators.
+### 1️⃣ **Display Function**
 
-For example, in `case 1:`, the code `P2 = ~(1 << 0);` is used to turn on the 1st LED. This involves shifting the binary value `1` to the left by `0` positions, resulting in the same binary value `00000001`. A bitwise NOT operation is then applied to flip each bit, and the result is assigned to port P2. This process is repeated for each case, with the shift value increasing for each subsequent case.
+```c
+void display(unsigned int a) {
+    switch (a) {
+        case 1: P0 = 0x79; break;
+        case 8: P0 = 0x00; break;
+    }
+}
+```
 
-The `break` statement stops the program immediately after each occurrence, indicating the end of the switch statement. Once a matching case is found and executed, the switch statement exits, preventing subsequent cases from executing.
+This function updates the **7-segment display** based on the **selected floor**.
 
-Essentially, the `display_led` function is a simple LED control mechanism where the value of `a` determines which LED to turn on based on the floor number. Bit operations manipulate specific bits on the P2 port, effectively controlling the state of individual LEDs connected to the microcontroller.
+![7-Segment Display](images/First_Part_OF_CODE.jpg)
+
+### 2️⃣ **Floor Call Function**
+
+```c
+void floor_call(unsigned int d) {
+    while (global != d) {
+        if (d > global) global++;
+        else global--;
+        display(global);
+        display_led(global);
+    }
+}
+```
+
+This function handles **elevator movement**:
+- Checks the **destination floor** (`d`).
+- Moves **up or down** based on the **current floor** (`global`).
+- Updates the **display and LED indicators**.
+
+![Floor Call Function](images/Second_Part_OF_CODE.jpg)
+
+### 3️⃣ **LED Display Function**
+
+```c
+void display_led(unsigned int a) {
+    switch (a) {
+        case 1: P2 = ~(1 << 0); break;
+        case 2: P2 = ~(1 << 1); break;
+    }
+}
+```
+
+This function controls the **LED indicators**:
+- Uses **bitwise operations** to activate LEDs based on the **selected floor**.
+- Each LED corresponds to a **floor number**.
+
+![Function Display](images/Third_Part_OF_CODE.jpg)
+
+---
+
+## 🎥 Demonstration
+The working system is demonstrated in a **video defense**, showcasing the complete **elevator simulation** in action.
+
+---
+
+## 📌 Conclusion
+This project provides a **functional elevator simulation system** using:
+✅ **Multisim for circuit design**
+✅ **8051 Microcontroller for control**
+✅ **7-Segment Display & LEDs for visualization**
+✅ **C programming for logic implementation**
+
+This serves as a **foundation** for **real-world elevator control systems**! 🚀
