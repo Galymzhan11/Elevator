@@ -2,7 +2,7 @@ Report:
 
 The final project for the course is the creation of a simplified elevator simulation system. So there we create the Multisim simulator and how it will look like.
 
-![Multisim Simulator](path/to/multisim_image.jpg)
+![Multisim Simulator](images\Circuit.png)
 
 So our Multisim looks like this and we write our code in the C language. There we need 8051 MCU. After that, we use resistors and also add LEDs that will light up to show information on the display. We also add two switches. The circuit diagram shows a simplified elevator system with 8 floors and one elevator. The elevator has a 7-segment display that shows the current floor and 8 LED lamps that sequentially light to convey the same information. We have 8 switches for elevator requests, 8 switches for floor selection, a 7-segment display for floor indication, and 8 LEDs for additional visual indication of the floor. You need to use 2 input ports and 2 output ports. Remember that Port 0 requires the connection of extra pull-up resistors, unlike Ports 1, 2, and 3.
 
@@ -14,19 +14,19 @@ This simplified elevator system circuit diagram serves as a foundation for devel
 
 A 7-segment display is a form of an electronic display device that consists of seven LEDs arranged in a rectangular fashion as shown below. Each LED is called a segment that maps to one of the terminals A through G (pay attention to the labels on the picture below). So the concept looks like this:
 
-![7-Segment Display](path/to/7_segment_display.jpg)
+![HEX Conversion](images\Hex_Table_OF_Numbers.png)
 
 So for every floor, we have different HEX conversion values: 0x9F, 0x25, 0x0D, 0x99, 0x49, 0x41, 0x1F, 0x01.
 
-![HEX Conversion](path/to/hex_conversion.jpg)
+![7-Segment Display](images\First_Part_OF_CODE.jpg)
 
 Create a function called `display`. The switch statement checks the value of `a` and executes the corresponding case block. Each case block assigns a specific hexadecimal value to the P0 register. If `a` is equal to 1, the P0 register is assigned the hexadecimal value `0x79`. Similarly, if `a` is equal to 8, the P0 register is assigned the hexadecimal value `0x00`. The break statement at the end of each case block prevents the execution of subsequent cases.
 
-![Function Display](path/to/function_display.jpg)
+![Function Display](images\Second_Part_OF_CODE.jpg)
 
 The function `floor_call` is responsible for calling the elevator to different floors. For each floor button pressed, it checks whether the destination floor (`d`) is greater or less than the current floor (`global`). Depending on the relationship between `d` and `global`, it either increments or decrements `global`. During this process, the elevator's position is updated, and the display and LED indicators are updated accordingly. If `d` is greater than `global`, the elevator moves up; otherwise, it moves down. In the video defense, I showed how it works.
 
-![Floor Call Function](path/to/floor_call_function.jpg)
+![Floor Call Function](images\Third_Part_OF_CODE.jpg)
 
 The `display_led` function is designed to control LEDs based on the value of the integer parameter `a`. The function uses a switch operator to evaluate the value of `a` and execute the appropriate case, each representing a different floor or LED.
 
