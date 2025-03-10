@@ -1,0 +1,502 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              11/13/2023 23:26:27 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\Main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\Main
+                    -.lst) TABS(2) OBJECT(.\Objects\Main.obj)
+
+line level    source
+
+   1          //CS-2118
+   2          //Galymzhan Beketay, Ernar Yes, Tamerlan Samatov.
+   3          
+   4          #include <reg51.h> 
+   5          
+   6          sbit floorup1 = P1^0;                         //Sbits for floor call
+   7          sbit floorup2 = P1^1;                       
+   8          sbit floorup3 = P1^2;
+   9          sbit floorup4 = P1^3;
+  10          sbit floorup5 = P1^4;
+  11          sbit floorup6 = P1^5;
+  12          sbit floorup7 = P1^6;
+  13          sbit floorup8 = P1^7;
+  14          
+  15          sbit floorselect1 = P3^0;                     //Sbits for floor selection
+  16          sbit floorselect2 = P3^1;
+  17          sbit floorselect3 = P3^2;
+  18          sbit floorselect4 = P3^3;
+  19          sbit floorselect5 = P3^4;
+  20          sbit floorselect6 = P3^5;
+  21          sbit floorselect7 = P3^6;
+  22          sbit floorselect8 = P3^7;
+  23          
+  24          void delay(unsigned int a);       // function for delay
+  25          void display(unsigned int a);     // function for number display
+  26          void display_led(unsigned int a); // Function for led display
+  27          void floor_call();                // Floor call function
+  28          void floor_select();              // Floor select function
+  29          unsigned char global = 1;         // This is global variable for floor calling
+  30          unsigned char d;                  // This defines each floor at the beginning 
+  31          
+  32          void main(void) { 
+  33   1          while(1){
+  34   2          floor_call();
+  35   2          floor_select();
+  36   2          } 
+  37   1        
+  38   1       } 
+  39            
+  40          void delay(unsigned int itime)
+  41           { 
+  42   1        unsigned int i, j;      
+  43   1        for(i=0;i<itime;i++)     
+  44   1         for(j=0;j<500;j++) ;    
+  45   1       } 
+  46           
+  47          void display(unsigned int a)  //function named display() with unsigned integer a
+  48           { 
+  49   1        switch (a)                  //case block assigns a specific hexadecimal value
+  50   1         { 
+  51   2         case 1:  
+  52   2          P0 = 0x79;                //If a is equal to 1, the P0 register is assigned the hexadecimal value 0x79, which
+             - show in display 1.
+  53   2          break;                    // The another cases works same
+C51 COMPILER V9.60.7.0   MAIN                                                              11/13/2023 23:26:27 PAGE 2   
+
+  54   2         case 2: 
+  55   2          P0 = 0x24; 
+  56   2          break; 
+  57   2         case 3: 
+  58   2          P0 = 0x30; 
+  59   2          break; 
+  60   2         case 4: 
+  61   2          P0 = 0x19; 
+  62   2          break; 
+  63   2         case 5: 
+  64   2          P0 = 0x12; 
+  65   2          break; 
+  66   2         case 6: 
+  67   2          P0 = 0x02; 
+  68   2          break; 
+  69   2         case 7: 
+  70   2          P0 = 0x78; 
+  71   2          break; 
+  72   2         case 8: 
+  73   2          P0 = 0x00;                //If a is equal to 8, the P0 register is assigned the hexadecimal value 0x00.
+  74   2          break; 
+  75   2         } 
+  76   1       }
+  77           
+  78           void display_led(unsigned int a){        //declaring display_led no return function with integer argument
+  79   1       
+  80   1                  switch (a) {
+  81   2                      case 1:               // finding matching cases with argument a, going through cases with matchin
+             -g case numbers
+  82   2                          P2 = ~(1 << 0);   // Turn on the 1st LED, shifting left by 0 positions with NOT operat
+             -ion which is changing each bit  
+  83   2                          break;            // stopping the program
+  84   2                      case 2:                 
+  85   2                          P2 = ~(1 << 1);   // Turn on the 2nd LED, shifting left by 1 positions with NOT operat
+             -ion which is changing each bit
+  86   2                          break;
+  87   2                      case 3:
+  88   2                          P2 = ~(1 << 2);   // Turn on the 3rd LED, shifting left by 2 positions with NOT operat
+             -ion which is changing each bit  
+  89   2                          break;
+  90   2                      case 4:
+  91   2                          P2 = ~(1 << 3);   // Turn on the 4th LED, shifting left by 3 positions with NOT operat
+             -ion which is changing each bit 
+  92   2                          break;
+  93   2                      case 5:
+  94   2                          P2 = ~(1 << 4);   // Turn on the 5th LED, shifting left by 4 positions with NOT operat
+             -ion which is changing each bit  
+  95   2                          break;
+  96   2                      case 6:
+  97   2                          P2 = ~(1 << 5);   // Turn on the 6th LED, shifting left by 5 positions with NOT operat
+             -ion which is changing each bit  
+  98   2                          break;
+  99   2                      case 7:
+ 100   2                          P2 = ~(1 << 6);   // Turn on the 7th LED, shifting left by 6 positions with NOT operat
+             -ion which is changing each bit  
+ 101   2                          break;
+ 102   2                      case 8:
+ 103   2                          P2 = ~(1 << 7);   // Turn on the 8th LED, shifting left by 7 positions with NOT operat
+             -ion which is changing each bit  
+ 104   2                          break;
+ 105   2                  }
+ 106   1      
+C51 COMPILER V9.60.7.0   MAIN                                                              11/13/2023 23:26:27 PAGE 3   
+
+ 107   1                  
+ 108   1      }
+ 109          
+ 110          
+ 111          
+ 112          
+ 113          void floor_select(){
+ 114   1            
+ 115   1      
+ 116   1      unsigned char x = 8;  // this is our all floors
+ 117   1          
+ 118   1          
+ 119   1          
+ 120   1          if(floorselect1 == 1){                // As you can see It simillar for the floor call function, cause when some
+             -one choose the floor from
+ 121   2                d = 1;                          // the inside of elevator it delivers him to the selected floor, logic same and we
+             - decided to do not
+ 122   2              if(d > global){                   // change them into difficult one, the logic explanation you can see in fucnt
+             -ion comments below.
+ 123   3                for(;global<=d;global++){
+ 124   4                    delay(1);                   
+ 125   4                    display(global);
+ 126   4                    display_led(global);
+ 127   4                  }
+ 128   3                global--;
+ 129   3              }
+ 130   2              else if (d < global){
+ 131   3                for(;d<=global;global--){
+ 132   4                    delay(1);
+ 133   4                    display(global);
+ 134   4                    display_led(global);
+ 135   4                  }
+ 136   3                global++;
+ 137   3              }
+ 138   2          }
+ 139   1          
+ 140   1          if(floorselect2 == 1){
+ 141   2                d = 2;
+ 142   2              if(d > global){
+ 143   3                for(;global<=d;global++){
+ 144   4                    delay(1);
+ 145   4                    display(global);
+ 146   4                    display_led(global);
+ 147   4                  }
+ 148   3                global--;
+ 149   3              }
+ 150   2              else if (d < global){
+ 151   3                for(;d<=global;global--){
+ 152   4                    delay(1);
+ 153   4                    display(global);
+ 154   4                    display_led(global);
+ 155   4                  }
+ 156   3                global++;
+ 157   3              }
+ 158   2            
+ 159   2          }
+ 160   1          if(floorselect3 == 1){
+ 161   2                d = 3;
+ 162   2              if(d > global){
+ 163   3                for(;global<=d;global++){
+ 164   4                    delay(1);
+ 165   4                    display(global);
+C51 COMPILER V9.60.7.0   MAIN                                                              11/13/2023 23:26:27 PAGE 4   
+
+ 166   4                    display_led(global);
+ 167   4                  }
+ 168   3                global--;
+ 169   3              }
+ 170   2              else if (d < global){
+ 171   3                for(;d<=global;global--){
+ 172   4                    delay(1);
+ 173   4                    display(global);
+ 174   4                    display_led(global);
+ 175   4                  }
+ 176   3                global++;
+ 177   3              }
+ 178   2            
+ 179   2          }
+ 180   1          if(floorselect4 == 1){
+ 181   2                d = 4;
+ 182   2              if(d > global){
+ 183   3                for(;global<=d;global++){
+ 184   4                    delay(1);
+ 185   4                    display(global);
+ 186   4                    display_led(global);
+ 187   4                  }
+ 188   3                global--;
+ 189   3              }
+ 190   2              else if (d < global){
+ 191   3                for(;d<=global;global--){
+ 192   4                    delay(1);
+ 193   4                    display(global);
+ 194   4                    display_led(global);
+ 195   4                  }
+ 196   3                global++;
+ 197   3              }
+ 198   2          }
+ 199   1          if(floorselect5 == 1){
+ 200   2                d = 5;
+ 201   2              if(d > global){
+ 202   3                for(;global<=d;global++){
+ 203   4                    delay(1);
+ 204   4                    display(global);
+ 205   4                    display_led(global);
+ 206   4                  }
+ 207   3                global--;
+ 208   3              }
+ 209   2              else if (d < global){
+ 210   3                for(;d<=global;global--){
+ 211   4                    delay(1);
+ 212   4                    display(global);
+ 213   4                    display_led(global);
+ 214   4                  }
+ 215   3                global++;
+ 216   3              }
+ 217   2            
+ 218   2          }
+ 219   1          if(floorup6 == 1){
+ 220   2                  d = 6;
+ 221   2              if(d > global){
+ 222   3                for(;global<=d;global++){
+ 223   4                    delay(1);
+ 224   4                    display(global);
+ 225   4                    display_led(global);
+ 226   4                  }
+ 227   3                global--;
+C51 COMPILER V9.60.7.0   MAIN                                                              11/13/2023 23:26:27 PAGE 5   
+
+ 228   3              }
+ 229   2              else if (d < global){
+ 230   3                for(;d<=global;global--){
+ 231   4                    delay(1);
+ 232   4                    display(global);
+ 233   4                    display_led(global);
+ 234   4                  }
+ 235   3                global++;
+ 236   3              }
+ 237   2              
+ 238   2          }
+ 239   1          if(floorselect7 == 1){
+ 240   2                d = 7;
+ 241   2              if(d > global){
+ 242   3                for(;global<=d;global++){
+ 243   4                    delay(1);
+ 244   4                    display(global);
+ 245   4                    display_led(global);
+ 246   4                  }
+ 247   3                global--;
+ 248   3              }
+ 249   2              else if (d < global){
+ 250   3                for(;d<=global;global--){
+ 251   4                    delay(1);
+ 252   4                    display(global);
+ 253   4                    display_led(global);
+ 254   4                  }
+ 255   3                global++;
+ 256   3              }
+ 257   2          }
+ 258   1          
+ 259   1          if(floorselect8 == 1){
+ 260   2                d = 8;
+ 261   2              if(d > global){
+ 262   3                for(;global<=d;global++){
+ 263   4                    delay(1);
+ 264   4                    display(global);
+ 265   4                    display_led(global);
+ 266   4                  }
+ 267   3                global--;
+ 268   3              }
+ 269   2              else if (d < global){
+ 270   3                for(;d<=global;global--){
+ 271   4                    delay(1);
+ 272   4                    display(global);
+ 273   4                    display_led(global);
+ 274   4                  }
+ 275   3                global++;
+ 276   3              }
+ 277   2          }
+ 278   1      
+ 279   1      
+ 280   1      }
+ 281          
+ 282          
+ 283          void floor_call(){        // function for calling elevator, this function calls elevator to each floor
+ 284   1          
+ 285   1          unsigned char x = 8;  // this is our all floors
+ 286   1          
+ 287   1          
+ 288   1          
+ 289   1          if(floorup1 == 1){                    //All of this conditions works same, I just explain this one for example, 
+C51 COMPILER V9.60.7.0   MAIN                                                              11/13/2023 23:26:27 PAGE 6   
+
+ 290   2                d = 1;                          //If this d more than global variable that equal for 1, then first loop works,
+ 291   2              if(d > global){                   //There d more than global and global at the end equals to the current floor,
+ 292   3                for(;global<=d;global++){       //It means that elevator goes up, but to go down we used another conditi
+             -on.
+ 293   4                    delay(1);                   //Where d less than global, then it goes global-- and display with the leds go d
+             -own. In video defense I showed how it works.
+ 294   4                    display(global);
+ 295   4                    display_led(global);
+ 296   4                  }
+ 297   3                global--;                       // this needs to save our floor position, in this case we go up and we decrement
+             - global
+ 298   3              }
+ 299   2              else if (d < global){
+ 300   3                for(;d<=global;global--){
+ 301   4                    delay(1);
+ 302   4                    display(global);
+ 303   4                    display_led(global);
+ 304   4                  }
+ 305   3                global++;                       // this needs to save our floor position, in this case we go down and we increme
+             -nt global
+ 306   3              }
+ 307   2          }
+ 308   1          
+ 309   1          if(floorup2 == 1){
+ 310   2                d = 2;
+ 311   2              if(d > global){
+ 312   3                for(;global<=d;global++){
+ 313   4                    delay(1);
+ 314   4                    display(global);
+ 315   4                    display_led(global);
+ 316   4                  }
+ 317   3                global--;
+ 318   3              }
+ 319   2              else if (d < global){
+ 320   3                for(;d<=global;global--){
+ 321   4                    delay(1);
+ 322   4                    display(global);
+ 323   4                    display_led(global);
+ 324   4                  }
+ 325   3                global++;
+ 326   3              }
+ 327   2            
+ 328   2          }
+ 329   1          if(floorup3 == 1){
+ 330   2                d = 3;
+ 331   2              if(d > global){
+ 332   3                for(;global<=d;global++){
+ 333   4                    delay(1);
+ 334   4                    display(global);
+ 335   4                    display_led(global);
+ 336   4                  }
+ 337   3                global--;
+ 338   3              }
+ 339   2              else if (d < global){
+ 340   3                for(;d<=global;global--){
+ 341   4                    delay(1);
+ 342   4                    display(global);
+ 343   4                    display_led(global);
+ 344   4                  }
+ 345   3                global++;
+ 346   3              }
+ 347   2            
+C51 COMPILER V9.60.7.0   MAIN                                                              11/13/2023 23:26:27 PAGE 7   
+
+ 348   2          }
+ 349   1          if(floorup4 == 1){
+ 350   2                d = 4;
+ 351   2              if(d > global){
+ 352   3                for(;global<=d;global++){
+ 353   4                    delay(1);
+ 354   4                    display(global);
+ 355   4                    display_led(global);
+ 356   4                  }
+ 357   3                global--;
+ 358   3              }
+ 359   2              else if (d < global){
+ 360   3                for(;d<=global;global--){
+ 361   4                    delay(1);
+ 362   4                    display(global);
+ 363   4                    display_led(global);
+ 364   4                  }
+ 365   3                global++;
+ 366   3              }
+ 367   2          }
+ 368   1          if(floorup5 == 1){
+ 369   2                d = 5;
+ 370   2              if(d > global){
+ 371   3                for(;global<=d;global++){
+ 372   4                    delay(1);
+ 373   4                    display(global);
+ 374   4                    display_led(global);
+ 375   4                  }
+ 376   3                global--;
+ 377   3              }
+ 378   2              else if (d < global){
+ 379   3                for(;d<=global;global--){
+ 380   4                    delay(1);
+ 381   4                    display(global);
+ 382   4                    display_led(global);
+ 383   4                  }
+ 384   3                global++;
+ 385   3              }
+ 386   2            
+ 387   2          }
+ 388   1          if(floorup6 == 1){
+ 389   2                  d = 6;
+ 390   2              if(d > global){
+ 391   3                for(;global<=d;global++){
+ 392   4                    delay(1);
+ 393   4                    display(global);
+ 394   4                    display_led(global);
+ 395   4                  }
+ 396   3                global--;
+ 397   3              }
+ 398   2              else if (d < global){
+ 399   3                for(;d<=global;global--){
+ 400   4                    delay(1);
+ 401   4                    display(global);
+ 402   4                    display_led(global);
+ 403   4                  }
+ 404   3                global++;
+ 405   3              }
+ 406   2              
+ 407   2          }
+ 408   1          if(floorup7 == 1){
+ 409   2                d = 7;
+C51 COMPILER V9.60.7.0   MAIN                                                              11/13/2023 23:26:27 PAGE 8   
+
+ 410   2              if(d > global){
+ 411   3                for(;global<=d;global++){
+ 412   4                    delay(1);
+ 413   4                    display(global);
+ 414   4                    display_led(global);
+ 415   4                  }
+ 416   3                global--;
+ 417   3              }
+ 418   2              else if (d < global){
+ 419   3                for(;d<=global;global--){
+ 420   4                    delay(1);
+ 421   4                    display(global);
+ 422   4                    display_led(global);
+ 423   4                  }
+ 424   3                global++;
+ 425   3              }
+ 426   2          }
+ 427   1          
+ 428   1          if(floorup8 == 1){
+ 429   2                d = 8;
+ 430   2              if(d > global){
+ 431   3                for(;global<=d;global++){
+ 432   4                    delay(1);
+ 433   4                    display(global);
+ 434   4                    display_led(global);
+ 435   4                  }
+ 436   3                global--;
+ 437   3              }
+ 438   2              else if (d < global){
+ 439   3                for(;d<=global;global--){
+ 440   4                    delay(1);
+ 441   4                    display(global);
+ 442   4                    display_led(global);
+ 443   4                  }
+ 444   3                global++;
+ 445   3              }
+ 446   2          }
+ 447   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1084    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
