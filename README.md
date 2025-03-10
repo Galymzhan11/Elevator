@@ -101,7 +101,7 @@ This function controls the **LED indicators**:
 ## 🎥 Demonstration  
 The working system is demonstrated in a **video defense**, showcasing the complete **elevator simulation** in action.  
 
-[🎬 Watch the video](media/2025-03-10_23-27-58.mkv)
+![Elevator Simulation](media/2025-03-10-23-27-58.gif)
 
 
 ---
